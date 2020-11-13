@@ -9,6 +9,12 @@
         $statement->execute();
         $results = $statement->fetch();
         $statement->closeCursor();
+        if(count($results) == 1){
+            echo "Incorrect Username or Password";
+        }
+        else if(count($results) > 1){
+            echo "You have successfully logged in";
+        }
         return $results;
     }
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -37,5 +43,12 @@
                 <input type="submit">
             </div>
         </form>
+        <button id='create'>Create New Account </button>
+        <script>
+            var btn = document.getElementById('create');
+            btn.addEventListener('click', function(){
+                document.location.href = 'http://www.people.virginia.edu/~ssr5ja/hello.php';
+            });
+        </script>
     </body>
 </html>

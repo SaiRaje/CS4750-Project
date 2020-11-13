@@ -1,5 +1,5 @@
 <?php
-    $username = 'sample';
+    $username = 'ssr5ja';
     $password = 'sample';
     $host = 'usersrv01.cs.virginia.edu';
     $dbname = 'ssr5ja';
@@ -10,7 +10,6 @@
     try 
     {
         $db = new PDO($dsn, $username, $password);   
-        echo "<p>You are connected to the database</p>";
     }   
     catch (PDOException $e)
     {
