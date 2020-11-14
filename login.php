@@ -5,7 +5,7 @@
         $query = "SELECT * FROM User WHERE Username= :user AND Password= :pass";
         $statement = $db ->prepare($query);
         $statement->bindValue(':user', $user);
-        $statement->bindValue(':pass', $pass);
+        $statement->bindValue(':pass', sha1($pass));
         $statement->execute();
         $results = $statement->fetch();
         $statement->closeCursor();
@@ -47,7 +47,7 @@
         <script>
             var btn = document.getElementById('create');
             btn.addEventListener('click', function(){
-                document.location.href = 'http://www.people.virginia.edu/~ssr5ja/hello.php';
+                document.location.href = 'http://www.people.virginia.edu/~ssr5ja/create.php';
             });
         </script>
     </body>
