@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require('connect.php');
     function get_all_friends($username){
         global $db;
@@ -32,6 +33,7 @@
     }
     $name = $_GET["name"];
     if($_SERVER['REQUEST_METHOD'] == "GET"){
+        echo $logged_in_user;
         $friends = get_all_friends($name);
         $collections = get_all_collections($name);
         $subscriptions = get_all_subscriptions($name);
@@ -43,6 +45,7 @@
         <meta charset="UTF-8">  
     </head>
     <h1><?php echo $name . "'s" . " Profile Page"?></h1>
+    <h1><?php echo $_SESSION['user']?></h1>
     <h2>Friends List:<h2>
     <ul>
     <?php foreach ($friends as $item): ?>

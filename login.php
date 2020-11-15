@@ -1,6 +1,8 @@
 <?php
+    session_start();
     require('connect.php');
-    function login($user, $pass, $login){
+    include 'globalvariables.php';
+    function login($user, $pass){
         global $db;
         $query = "SELECT * FROM User WHERE Username= :user AND Password= :pass";
         $statement = $db ->prepare($query);
@@ -14,17 +16,16 @@
         }
         else if(count($results) > 1){ 
             echo "You have successfully logged in";
-             $login = $user;
-            header("Location: http://www.people.virginia.edu/~ssr5ja/profile.php?name=lol", true, 301);
+             $_SESSION['user'] = $user;
+            header("Location: http://www.people.virginia.edu/~ssr5ja/profile.php?name=" . $user, true, 301);
             exit();
         }
         return $results;
     }
-    $logged_in_user = "";
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $input_username = $_POST['username'];
         $input_password = $_POST['password'];
-        login($input_username, $input_password, $logged_in_user);
+        login($input_username, $input_password);
     }
 ?>
 
