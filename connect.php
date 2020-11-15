@@ -9,7 +9,7 @@
 
     try 
     {
-        $db = new PDO($dsn, $username, $password);   
+        $db = new PDO($dsn, $username, $password);
     }   
     catch (PDOException $e)
     {

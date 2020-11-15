@@ -55,5 +55,12 @@
                 <input type="submit">
             </div>
         </form>
+        <button id='login'>Go To Login Page</button>
+        <script>
+            var btn = document.getElementById('login');
+            btn.addEventListener('click', function(){
+                document.location.href = 'http://www.people.virginia.edu/~ssr5ja/login.php';
+            });
+        </script>
     </body>
 </html>

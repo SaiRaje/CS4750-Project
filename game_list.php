@@ -3,7 +3,7 @@ require('connect.php');
 function getallgames()
 {
 	global $db;
-	$query = "SELECT Game_Name, Game_Release_Year, Max_Player_Count, Min_Player_Count, Avg_Rating, Play_Time FROM board_game";
+	$query = "SELECT Game_Name, Game_Release_Year, Max_Player_Count, Min_Player_Count, Avg_Rating, Play_Time FROM Board_Game";
     $statement = $db->prepare($query);
     $statement->execute();
 	
@@ -35,7 +35,7 @@ $games = getallgames();
   <?php foreach ($games as $item): ?>
   <tr>
     <td>
-        <a href=<?php echo "http://localhost/cs4750/game_page.php" . "?name=" . urlencode($item['Game_Name']) . "?year=" . urlencode($item['Game_Release_Year'])?>><?php echo $item["Game_Name"] ?></a> 
+        <a href=<?php echo "http://www.people.virginia.edu/~ssr5ja/game_page.php" . "?name=" . urlencode($item['Game_Name']) . "&year=" . urlencode($item['Game_Release_Year'])?>><?php echo $item["Game_Name"] ?></a> 
     </td>
     <td><?php echo $item['Game_Release_Year']; ?></td>
     <td><?php echo $item['Max_Player_Count']; ?></td> 
