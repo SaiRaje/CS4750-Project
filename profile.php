@@ -8,39 +8,27 @@
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();
-        $formatted_results = array();
-        for($i = 0; $i < count($results); $i++){
-            array_push($formatted_results, $results[$i][0]);
-        }
-        return $formatted_results;
+        return $results;
     }
     function get_all_collections($username){
         global $db;
-        $query = "SELECT Collection_Name, public FROM Collection WHERE Username= :name";
+        $query = "SELECT * FROM Collection WHERE Username= :name";
         $statement = $db ->prepare($query);
         $statement->bindValue(':name', $username);
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();
-        $formatted_results = array();
-        for($i = 0; $i < count($results); $i++){
-            array_push($formatted_results, $results[$i][0]);
-        }
-        return $formatted_results;
+        return $results;
     }
     function get_all_subscriptions($username){
         global $db;
-        $query = "SELECT Collection_Name FROM User_Subscribe WHERE Username= :name";
+        $query = "SELECT * FROM User_Subscribe WHERE Username= :name";
         $statement = $db ->prepare($query);
         $statement->bindValue(':name', $username);
         $statement->execute();
         $results = $statement->fetchAll();
         $statement->closeCursor();
-        $formatted_results = array();
-        for($i = 0; $i < count($results); $i++){
-            array_push($formatted_results, $results[$i][0]);
-        }
-        return $formatted_results;
+        return $results;
     }
     $name = $_GET["name"];
     if($_SERVER['REQUEST_METHOD'] == "GET"){
@@ -58,19 +46,23 @@
     <h2>Friends List:<h2>
     <ul>
     <?php foreach ($friends as $item): ?>
-        <li><?php echo $item ?></li>
+        <li><?php echo $item["Friend_Username"] ?></li>
     <?php endforeach; ?>       
     </ul>
     <h2>Collections:<h2>
     <ul>
     <?php foreach ($collections as $item): ?>
-        <li><?php echo $item ?></li>
+        <li>
+        <a href=<?php echo "http://www.people.virginia.edu/~ssr5ja/collection.php" . "?collection_name=" . urlencode($item['Collection_Name']) . "&username=" . urlencode($item["Username"])?>><?php echo $item["Collection_Name"] ?></a> 
+        </li>
     <?php endforeach; ?>       
     </ul>
     <h2>Subscribed To Collections:<h2>
     <ul>
     <?php foreach ($subscriptions as $item): ?>
-        <li><?php echo $item ?></li>
+        <li>
+            <a href=<?php echo "http://www.people.virginia.edu/~ssr5ja/collection.php" . "?collection_name=" . urlencode($item['Collection_Name']) . "&username=" . urlencode($item["Collection_Creator"])?>><?php echo $item["Collection_Name"] . " by: " . $item["Collection_Creator"]?></a> 
+        </li>
     <?php endforeach; ?>       
     </ul>
 </html>
