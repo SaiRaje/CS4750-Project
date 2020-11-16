@@ -3,7 +3,7 @@ require('connect.php');
 function getallgames()
 {
 	global $db;
-	$query = "SELECT Game_Name, Game_Release_Year, Max_Player_Count, Min_Player_Count, Avg_Rating, Play_Time FROM Board_Game";
+	$query = "SELECT Game_Name, Game_Release_Year, Max_Player_Count, Min_Player_Count, Avg_Rating, Play_Time FROM board_game";
     $statement = $db->prepare($query);
     $statement->execute();
 	
@@ -15,12 +15,64 @@ function getallgames()
 	
     return $results;
 }
-$games = getallgames();
+function getallgames_byrating()
+{
+	global $db;
+	$query = "SELECT Game_Name, Game_Release_Year, Max_Player_Count, Min_Player_Count, Avg_Rating, Play_Time FROM board_game ORDER BY Avg_Rating DESC";
+    $statement = $db->prepare($query);
+    $statement->execute();
+	
+	// fetchAll() returns an array for all of the rows in the result set
+	$results = $statement->fetchAll();
+	
+	// closes the cursor and frees the connection to the server so other SQL statements may be issued
+	$statement->closecursor();
+	
+    return $results;
+}
+function getallgames_byage()
+{
+	global $db;
+	$query = "SELECT Game_Name, Game_Release_Year, Max_Player_Count, Min_Player_Count, Avg_Rating, Play_Time FROM board_game ORDER BY Game_Release_Year";
+    $statement = $db->prepare($query);
+    $statement->execute();
+	
+	// fetchAll() returns an array for all of the rows in the result set
+	$results = $statement->fetchAll();
+	
+	// closes the cursor and frees the connection to the server so other SQL statements may be issued
+	$statement->closecursor();
+	
+    return $results;
+}
+if(isset($_GET["order"])) {
+  $order_by = $_GET["order"];
+}
+else {
+  $order_by = "Game_Name";
+}
+if($order_by == "Avg_Rating"){
+  $games = getallgames_byrating();
+}
+else if($order_by == "Year"){
+  $games = getallgames_byage();
+}
+else{
+  $games = getallgames();
+}
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <h1>List of Games</h1>
+<form method="post">
+
+    <a href="http://localhost/cs4750/game_list.php?order=Avg_Rating">Order By Rating</a>
+    <a href="http://localhost/cs4750/game_list.php">Order By Name</a>
+    <a href="http://localhost/cs4750/game_list.php?order=Year">Order By Release Year</a>
+
+</form>
 <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
   <thead>
   <tr style="background-color:#B0B0B0">
